@@ -8,6 +8,7 @@ use clap::{App, Arg, SubCommand};
 
 mod day_1;
 mod day_2;
+mod day_3;
 
 fn main() {
     pretty_env_logger::init();
@@ -19,6 +20,7 @@ fn main() {
         .subcommand(SubCommand::with_name("day1_2"))
         .subcommand(SubCommand::with_name("day2_1"))
         .subcommand(SubCommand::with_name("day2_2"))
+        .subcommand(SubCommand::with_name("day3_1"))
         .arg(Arg::with_name("input")
             .help("Path to input file")
             .short("f")
@@ -34,6 +36,7 @@ fn main() {
         ("day1_2", _) => { day_1::calculate_fuel_extended(filepath.to_string()) },
         ("day2_1", _) => { day_2::program_alarm(filepath.to_string()) },
         ("day2_2", _) => { day_2::search_answer(filepath.to_string()) },
+        ("day3_1", _) => { day_3::find_closest_crossing(filepath.to_string()) },
         _ => { Err(anyhow!("Challenge is unspecified")) },
     };
 
