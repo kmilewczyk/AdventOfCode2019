@@ -1,13 +1,3 @@
-/// krok indukcyjny:
-/// jesteśmy na liczbie spełniającej warunek nie zmniejszenia
-/// chcemy zbadać następną spełaniająca warunek liczbę
-/// możemy użyć tylko liczbę o 1 większą niż cyfra w następnym rzędzie wielkości
-/// 124444 -> 124445 --> 12 4449 -> 12 4455 --> 12 4499 -> 12 4555
-/// operacja aby uzyskać cyfrę rzędu n: (<liczba> / 10^(n-1)) mod 10
-/// Jeżeli dochodzimy do cyfry 9 to martwimy się rzędem wielkości wyżej
-/// Jeżeli możemy inkremenotwać ten rząd to przechodzimy spowrotem niżej
-/// Zaprzestań pętli gdy następna liczba jest spoza zakresu
-
 use anyhow;
 
 use std::io;
@@ -43,7 +33,6 @@ pub fn count_diffrent_passwords_part2(filepath: String) -> anyhow::Result<()> {
         for number in lower_bound..upper_bound+1 {
             if check_for_password_part2(number) {
                 count += 1;
-                println!("{}", number);
             }
         }
 

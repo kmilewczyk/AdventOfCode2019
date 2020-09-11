@@ -3,6 +3,7 @@ extern crate clap;
 extern crate pretty_env_logger;
 #[macro_use] extern crate anyhow;
 #[macro_use] extern crate itertools;
+#[macro_use] extern crate lazy_static;
 
 use clap::{App, Arg, SubCommand};
 
@@ -10,27 +11,32 @@ mod day_1;
 mod day_2;
 mod day_3;
 mod day_4;
+mod day_5;
+
+lazy_static! {
+    static ref SUBCOMMANDS: Vec<&'static str> = vec!["day1_1", "day1_2", "day2_1", "day2_2", "day3_1",
+    "day3_2", "day4_1", "day4_2", "day5_1"];
+}
 
 fn main() {
     pretty_env_logger::init();
 
-    let matches = App::new("Advent of Code 2019")
+    let matches =  {
+        let mut app = App::new("Advent of Code 2019")
         .version("0.2")
         .author("Karol Milewczyk")
-        .subcommand(SubCommand::with_name("day1_1"))
-        .subcommand(SubCommand::with_name("day1_2"))
-        .subcommand(SubCommand::with_name("day2_1"))
-        .subcommand(SubCommand::with_name("day2_2"))
-        .subcommand(SubCommand::with_name("day3_1"))
-        .subcommand(SubCommand::with_name("day3_2"))
-        .subcommand(SubCommand::with_name("day4_1"))
-        .subcommand(SubCommand::with_name("day4_2"))
         .arg(Arg::with_name("input")
             .help("Path to input file")
             .short("f")
             .long("input")
-            .takes_value(true))
-        .get_matches();
+            .takes_value(true));
+
+        for subcommand in SUBCOMMANDS.iter() {
+            app = app.subcommand(SubCommand::with_name(subcommand));
+        }
+
+        app.get_matches()
+    };
 
     let filepath = matches.value_of("input").unwrap_or("input.txt");
     info!("Using file \"{}\" as input.", filepath);
@@ -44,6 +50,7 @@ fn main() {
         ("day3_2", _) => { day_3::find_lowest_latency(filepath.to_string()) },
         ("day4_1", _) => { day_4::count_diffrent_passwords(filepath.to_string()) },
         ("day4_2", _) => { day_4::count_diffrent_passwords_part2(filepath.to_string()) },
+        ("day5_1", _) => { day_5::diagnostic_tests(filepath.to_string()) },
         _ => { Err(anyhow!("Challenge is unspecified")) },
     };
 

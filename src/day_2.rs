@@ -36,7 +36,7 @@ pub fn search_answer(filepath: String) -> anyhow::Result<()> {
     Ok(())
 }
 
-fn get_instructions(filepath: String) -> anyhow::Result<Vec<isize>> {
+pub fn get_instructions(filepath: String) -> anyhow::Result<Vec<isize>> {
     let mut instructions: Vec<isize> = Vec::new();
 
     for substring in fs::read_to_string(filepath)?.split(',') {
