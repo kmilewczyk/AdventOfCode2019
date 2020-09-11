@@ -9,6 +9,7 @@ use clap::{App, Arg, SubCommand};
 mod day_1;
 mod day_2;
 mod day_3;
+mod day_4;
 
 fn main() {
     pretty_env_logger::init();
@@ -21,6 +22,9 @@ fn main() {
         .subcommand(SubCommand::with_name("day2_1"))
         .subcommand(SubCommand::with_name("day2_2"))
         .subcommand(SubCommand::with_name("day3_1"))
+        .subcommand(SubCommand::with_name("day3_2"))
+        .subcommand(SubCommand::with_name("day4_1"))
+        .subcommand(SubCommand::with_name("day4_2"))
         .arg(Arg::with_name("input")
             .help("Path to input file")
             .short("f")
@@ -37,6 +41,9 @@ fn main() {
         ("day2_1", _) => { day_2::program_alarm(filepath.to_string()) },
         ("day2_2", _) => { day_2::search_answer(filepath.to_string()) },
         ("day3_1", _) => { day_3::find_closest_crossing(filepath.to_string()) },
+        ("day3_2", _) => { day_3::find_lowest_latency(filepath.to_string()) },
+        ("day4_1", _) => { day_4::count_diffrent_passwords(filepath.to_string()) },
+        ("day4_2", _) => { day_4::count_diffrent_passwords_part2(filepath.to_string()) },
         _ => { Err(anyhow!("Challenge is unspecified")) },
     };
 
