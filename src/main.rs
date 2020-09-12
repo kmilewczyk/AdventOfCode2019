@@ -12,10 +12,11 @@ mod day_2;
 mod day_3;
 mod day_4;
 mod day_5;
+mod day_6;
 
 lazy_static! {
     static ref SUBCOMMANDS: Vec<&'static str> = vec!["day1_1", "day1_2", "day2_1", "day2_2", "day3_1",
-    "day3_2", "day4_1", "day4_2", "day5"];
+    "day3_2", "day4_1", "day4_2", "day5", "day6_1"];
 }
 
 fn main() {
@@ -50,7 +51,8 @@ fn main() {
         ("day3_2", _) => { day_3::find_lowest_latency(filepath.to_string()) },
         ("day4_1", _) => { day_4::count_diffrent_passwords(filepath.to_string()) },
         ("day4_2", _) => { day_4::count_diffrent_passwords_part2(filepath.to_string()) },
-        ("day5", _) => { day_5::diagnostic_tests(filepath.to_string()) },
+        ("day5", _)   => { day_5::diagnostic_tests(filepath.to_string()) },
+        ("day6_1", _) => { day_6::total_orbit_count(filepath.to_string()) },
         _ => { Err(anyhow!("Challenge is unspecified")) },
     };
 
