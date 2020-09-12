@@ -58,6 +58,48 @@ pub fn run_program (instructions: &mut Vec<isize>) -> anyhow::Result<()> {
 
                 ip += 2;
             },
+            5 => {
+                let a = get_paramater(instructions, parameter_modes, 1, ip+1)?;
+                if a != 0 {
+                    let jump = get_paramater(instructions, parameter_modes, 10, ip+2)? as usize;
+                    ip = jump;
+                } else {
+                    ip += 3;
+                }
+            },
+            6 => {
+                let a = get_paramater(instructions, parameter_modes, 1, ip+1)?;
+                if a == 0 {
+                    let jump = get_paramater(instructions, parameter_modes, 10, ip+2)? as usize;
+                    ip = jump;
+                } else {
+                    ip += 3;
+                }
+            },
+            7 => {
+                let a = get_paramater(instructions, parameter_modes, 1, ip+1)?;
+                let b = get_paramater(instructions, parameter_modes, 10, ip+2)?;
+                let dst = get_value(instructions, ip+3)? as usize;
+
+                instructions[dst] = match a < b {
+                    true => 1,
+                    false => 0,
+                };
+
+                ip += 4;
+            },
+            8 => {
+                let a = get_paramater(instructions, parameter_modes, 1, ip+1)?;
+                let b = get_paramater(instructions, parameter_modes, 10, ip+2)?;
+                let dst = get_value(instructions, ip+3)? as usize;
+
+                instructions[dst] = match a == b {
+                    true => 1,
+                    false => 0,
+                };
+
+                ip += 4;
+            },
             99 => { break; },
             op => { return Err(anyhow!("Operand {} is unknown", op)); }
         };
